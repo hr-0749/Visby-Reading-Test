@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>長文読解テスト</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="settingScreen" class="screen">
+    <h1>設定</h1>
+
+    <input
+      id="nameInput"
+      type="text"
+      placeholder="名前を入力"
+      autocomplete="off"
+    >
+
+    <select id="progressModeSelect">
+      <!--<option value="none">回答数を表示しない</option>-->
+      <option value="text">回答数を表示</option>
+      <!--<option value="bar">バーで表示</option>
+      <option value="both">回答数とバーの両方</option>
+      <option value="circle">回転バーで表示</option>
+      <option value="circleBoth">回答数と回転バーの両方</option>-->
+    </select>
+
+    <button id="goStartBtn">次へ</button>
+  </div>
+
+  <div
+    id="startScreen"
+    class="screen"
+    style="display: none;"
+  >
+    <h1>長文読解</h1>
+    <button id="startBtn">スタート</button>
+  </div>
+
+  <div
+    id="passageScreen"
+    class="screen"
+    style="display: none;"
+  >
+    <h1>本文</h1>
+
+    <p id="passageNotice">
+      本文を読んでください。時間になると自動で問題画面へ進みます。
+    </p>
+
+    <div
+      id="passageCountdown"
+      role="timer"
+      aria-live="polite"
+    >
+      残り時間：--:--
+    </div>
+
+    <div id="passageBox">
+      <p id="passageText"></p>
+    </div>
+  </div>
+
+  <div
+    id="testScreen"
+    class="screen"
+    style="display: none;"
+  >
+    <div id="testLayout">
+
+      <div id="testPassageBox">
+        <h2>本文</h2>
+        <p id="testPassageText"></p>
+      </div>
+
+      <div id="questionArea">
+        <div id="progressText"></div>
+
+        <div id="progressBarWrap">
+          <div id="progressBar"></div>
+        </div>
+
+        <div id="circleProgressWrap">
+          <svg
+            id="circleProgress"
+            viewBox="0 0 120 120"
+          >
+            <circle
+              id="circleBg"
+              cx="60"
+              cy="60"
+              r="45"
+            ></circle>
+
+            <circle
+              id="circleFg"
+              cx="60"
+              cy="60"
+              r="45"
+            ></circle>
+          </svg>
+        </div>
+
+        <div id="questionCard">
+          <div id="question"></div>
+          <div id="choiceArea"></div>
+        </div>
+
+        <div
+          id="multiAnswerArea"
+          style="display: none;"
+        ></div>
+
+        <input
+          id="answerInput"
+          type="text"
+          autocomplete="off"
+          placeholder="答えを入力"
+        >
+
+        <button id="nextBtn">次へ</button>
+
+        <div
+          id="submitArea"
+          style="display: none;"
+        >
+          <button id="sendBtn">送信</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
