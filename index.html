@@ -14,21 +14,19 @@
   <div id="settingScreen" class="screen">
     <h1>設定</h1>
 
-    <input
-      id="nameInput"
-      type="text"
-      placeholder="名前を入力"
-      autocomplete="off"
-    >
+      <input
+        id="studentIdInput"
+        type="text"
+        placeholder="学生番号を入力"
+        autocomplete="off"
+      >
 
-    <select id="progressModeSelect">
-      <!--<option value="none">回答数を表示しない</option>-->
-      <option value="text">回答数を表示</option>
-      <!--<option value="bar">バーで表示</option>
-      <option value="both">回答数とバーの両方</option>
-      <option value="circle">回転バーで表示</option>
-      <option value="circleBoth">回答数と回転バーの両方</option>-->
-    </select>
+      <input
+        id="nameInput"
+        type="text"
+        placeholder="名前を入力"
+        autocomplete="off"
+      >
 
     <button id="goStartBtn">次へ</button>
   </div>
@@ -90,19 +88,17 @@
             id="circleProgress"
             viewBox="0 0 120 120"
           >
-            <circle
+            <path
               id="circleBg"
-              cx="60"
-              cy="60"
-              r="45"
-            ></circle>
+              d="M 0 8 A 112 112 0 0 1 112 120"
+              pathLength="100"
+            ></path>
 
-            <circle
+            <path
               id="circleFg"
-              cx="60"
-              cy="60"
-              r="45"
-            ></circle>
+              d="M 0 8 A 112 112 0 0 1 112 120"
+              pathLength="100"
+            ></path>
           </svg>
         </div>
 

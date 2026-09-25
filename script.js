@@ -1,5 +1,5 @@
 const GAS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbx1Lli8LcYO7_B_tM6QQTEWFYucUv3jXDOBwoORDYOVnq2HDTpOcF4hhNXAYSmrGLW15A/exec";
+  "https://script.google.com/macros/s/AKfycbxj2FickiFG78MEs9w3APsn9pU0s3BjQMBy6ldpuGykSfZJVecstE38Z70n3mxc28v4cQ/exec";
 
 /*
   本文を読む時間です。
@@ -9,7 +9,7 @@ const GAS_WEB_APP_URL =
 
   const PASSAGE_READING_TIME_MS = 3 * 60 * 1000;
 */
-const PASSAGE_READING_TIME_MS = 90 * 1000;
+const PASSAGE_READING_TIME_MS = 2 * 1000;
 
 const passage = `スウェーデンのゴットランド島にあるヴィスビーは、バルト海に面した中世の港町である。ゴットランド島はスウェーデン本土とバルト海東岸地域の間に位置しており、海を渡る商人や船にとって重要な場所だった。かつてこの地域はヴァイキングの活動とも関わり、その後、ヴィスビーは中世の海上交易によって大きく発展した。特に12世紀から14世紀にかけて、ヴィスビーはバルト海交易の中心となり、北ヨーロッパ各地の商人が集まる都市となった。
 
@@ -310,6 +310,7 @@ let currentIndex = 0;
 let startTime = null;
 let results = [];
 let participantName = "";
+let studentId = "";
 let currentQuestion = null;
 
 let choiceChangeCount = 0;
@@ -343,9 +344,9 @@ const testScreen =
 const nameInput =
   document.getElementById("nameInput");
 
-const progressModeSelect =
+const studentIdInput =
   document.getElementById(
-    "progressModeSelect"
+    "studentIdInput"
   );
 
 const goStartBtn =
@@ -414,9 +415,7 @@ const submitArea =
 const sendBtn =
   document.getElementById("sendBtn");
 
-const circleRadius = 45;
-const circleLength =
-  2 * Math.PI * circleRadius;
+const circleLength = 100;
 
 function getProgressModeLabel(mode) {
   const labels = {
@@ -482,19 +481,28 @@ function updatePassageCountdown() {
 }
 
 function goToStartScreen() {
-  participantName =
-    nameInput.value.trim();
+  studentId =
+  studentIdInput.value.trim();
 
-  if (participantName === "") {
-    alert("名前を入力してください");
-    return;
-  }
+participantName =
+  nameInput.value.trim();
 
-  progressMode =
-    progressModeSelect.value;
 
-  progressModeLabel =
-    getProgressModeLabel(progressMode);
+if (studentId === "") {
+  alert("学生番号を入力してください");
+  return;
+}
+
+
+if (participantName === "") {
+  alert("名前を入力してください");
+  return;
+}
+
+
+//進捗表示は固定
+progressMode = "text";
+progressModeLabel = "テキストで表示";
 
   settingScreen.style.display = "none";
   startScreen.style.display = "flex";
@@ -1414,11 +1422,12 @@ function sumTimeMs(targetResults) {
 
 function createOneRowResult() {
   const oneRowResult = {
-    name: participantName,
-    progressMode: progressMode,
-    progressModeLabel:
-      progressModeLabel
-  };
+  studentId: studentId,
+  name: participantName,
+  progressMode: progressMode,
+  progressModeLabel:
+    progressModeLabel
+};
 
   for (
     let index = 0;
@@ -1594,6 +1603,7 @@ function downloadCSV() {
     createOneRowResult();
 
   const headers = [
+    "学籍番号",
     "名前",
     "進捗表示条件",
     "正解数",
@@ -1605,6 +1615,10 @@ function downloadCSV() {
   ];
 
   const values = [
+    `"${escapeCSV(
+    oneRowResult.studentId
+    )}"`,
+
     `"${escapeCSV(
       oneRowResult.name
     )}"`,
