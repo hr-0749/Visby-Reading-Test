@@ -1,5 +1,5 @@
 const GAS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbxj2FickiFG78MEs9w3APsn9pU0s3BjQMBy6ldpuGykSfZJVecstE38Z70n3mxc28v4cQ/exec";
+  "https://script.google.com/macros/s/AKfycbww2-yMgjJ1utjskDjLJyth_scdz78CWeUElGF-Un9aSXtqmTFnI4Cgvsv3zJek3l1w/exec";
 
 /*
   本文を読む時間です。
@@ -317,6 +317,7 @@ let choiceChangeCount = 0;
 let deletionCount = 0;
 let scrollDistancePx = 0;
 let previousScrollTop = 0;
+let passageTotalHeightPx = 0;
 
 const previousInputValues = new WeakMap();
 const beforeInputHandled = new WeakMap();
@@ -587,6 +588,7 @@ function clearPassageTimer() {
 }
 
 function goToQuestionScreen() {
+
   if (hasMovedToQuestionScreen) {
     return;
   }
@@ -600,6 +602,12 @@ function goToQuestionScreen() {
 
   passageScreen.style.display = "none";
   testScreen.style.display = "flex";
+
+
+  // 本文全体の高さを1回だけ取得
+  passageTotalHeightPx =
+    testPassageBox.scrollHeight;
+
 
   showQuestion();
 }
@@ -1424,9 +1432,14 @@ function createOneRowResult() {
   const oneRowResult = {
   studentId: studentId,
   name: participantName,
+
   progressMode: progressMode,
   progressModeLabel:
-    progressModeLabel
+    progressModeLabel,
+
+  // 端末による本文表示差
+  passageTotalHeightPx:
+    Math.round(passageTotalHeightPx)
 };
 
   for (
@@ -1606,6 +1619,7 @@ function downloadCSV() {
     "学籍番号",
     "名前",
     "進捗表示条件",
+    "本文全体高さ_px",
     "正解数",
     "合計回答時間_秒",
     "前半正解数",
@@ -1627,6 +1641,8 @@ function downloadCSV() {
       oneRowResult
         .progressModeLabel
     )}"`,
+
+    oneRowResult.passageTotalHeightPx,
 
     oneRowResult.correctCount,
 
